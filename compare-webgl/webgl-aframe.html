@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <title></title>
@@ -14,14 +14,16 @@
 
     <script type="text/javascript">
         window.onload = function () {
+			var fragment = document.createDocumentFragment();
             var scene = document.querySelector('a-scene')
             var wrapper = document.querySelector('#cubeWrapper');
             for (var i = 0; i < 5000; i++) {
                 var box = document.createElement("a-box");
                 box.setAttribute('position', { x: Math.random() * 10 - 5, y: Math.random() * 10 - 5, z: Math.random() * 10 - 5 });
                 box.setAttribute('scale', { x: 0.1, y: 0.1, z: 0.1 });
-                wrapper.appendChild(box);
+                fragment.appendChild(box);
             }
+			wrapper.appendChild(fragment);
         }
     </script>
 </body>
