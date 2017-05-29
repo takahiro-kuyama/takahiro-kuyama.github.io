@@ -14,13 +14,6 @@
 
     <script type="text/javascript">
         window.onload = function () {
-            document.querySelector('a-scene').addEventListener('renderstart', function () {
-                var url = 'http://hogehogetest';
-                var request = new XMLHttpRequest();
-                request.open('GET', url);
-                request.send(null);
-            });
-
             var fragment = document.createDocumentFragment();
             var scene = document.querySelector('a-scene')
             var wrapper = document.querySelector('#cubeWrapper');
