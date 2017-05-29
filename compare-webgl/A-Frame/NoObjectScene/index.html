@@ -9,7 +9,8 @@
     <script type="text/javascript">
         window.onload = function () {
             document.querySelector('a-scene').addEventListener('renderstart', function () {
-                var url = 'http://hogehogetest';
+                console.log('render start');
+                var url = 'https://takahiro-kuyama.github.io';
                 var request = new XMLHttpRequest();
                 request.open('GET', url);
                 request.send(null);
