@@ -29,6 +29,7 @@
 <body>
     <div class="movie"><canvas width="320" height="180" id="myCanvas"></canvas></div>
     <div id="timer" class="timer">0.00</div>
+    <div id="load_indicator" class="timer">haven't loaded</div>
     <script type="text/javascript">
 
         var audio = new Audio();
@@ -39,6 +40,7 @@
         var ctx = canvas.getContext("2d");
         var ua = navigator.userAgent;
         var timer = document.getElementById("timer");
+        var load_indicator = document.getElementById("load_indicator");
         if (/(iPhone|iPod)/.test(ua) || true) { // iPadもVideoはインライン再生可能である
             ctx.scale(0.5, 0.5);
             var prms1 = new Promise(function (resolve, reject) {
@@ -52,6 +54,7 @@
             });
             var prms2 = new Promise(function (resolve, reject) {
                 audio.addEventListener('canplay', function () {
+                    load_indicator.innerText = "loaded"
                     resolve();
                 });
                 audio.addEventListener('error', function () {
