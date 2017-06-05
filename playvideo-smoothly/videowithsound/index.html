@@ -66,7 +66,7 @@
                 audio.play();
                 (function loop() {
                     video.currentTime = audio.currentTime;
-                    timer.innerText = audio.currentTime.toString();
+                    timer.innerText = Date.now().toString();
                     ctx.drawImage(video, 0, 0, 640, 360);
                     if (true) {
                         requestAnimationFrame(loop);
