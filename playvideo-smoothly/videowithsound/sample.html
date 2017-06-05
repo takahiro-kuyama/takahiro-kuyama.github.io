@@ -7,6 +7,8 @@
     <meta name="Keywords" content="JavaScript,HTML5,CSS" />
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
 
+    <link href="/lib/html5reset-1.6.1/css" type="text/css" rel="stylesheet" />
+
     <style type="text/css">
         body {
             background: #FFFFFF;
@@ -42,7 +44,7 @@
     <div class="movie"><canvas width="320" height="180" id="myCanvas"></canvas></div>
     <div class="control"><button>play/pause</button></div>
     <script type="text/javascript">
-        (function () {
+        window.onload = function () {
             var btn = document.querySelector('button');
             btn.disabled = true;
             var audio = new Audio();
@@ -53,7 +55,7 @@
             var ctx = canvas.getContext("2d");
             var togglePlay;
             var ua = navigator.userAgent;
-            if (/(iPhone|iPod)/.test(ua) || true) { // iPadもVideoはインライン再生可能である
+            if (/(iPhone|iPod)/.test(ua)) { // iPadもVideoはインライン再生可能である
                 ctx.scale(0.5, 0.5);
                 var prms1 = new Promise(function (resolve, reject) {
                     video.addEventListener('canplay', function () {
@@ -113,7 +115,7 @@
                 };
             }
             btn.addEventListener('click', togglePlay);
-        })();
+        };
     </script>
 </body>
 </html>
