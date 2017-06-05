@@ -20,10 +20,15 @@
                 width: 320px;
                 height: 180px;
             }
+
+        .timer {
+            text-align: center;
+        }
     </style>
 </head>
 <body>
     <div class="movie"><canvas width="320" height="180" id="myCanvas"></canvas></div>
+    <div id="timer" class="timer">0.00</div>
     <script type="text/javascript">
 
         var audio = new Audio();
@@ -33,53 +38,52 @@
         var canvas = document.getElementById('myCanvas');
         var ctx = canvas.getContext("2d");
         var ua = navigator.userAgent;
-        function loop() {
-            video.currentTime = audio.currentTime;
-            ctx.drawImage(video, 0, 0, 640, 360);
-            if (!audio.paused) {
-                requestAnimationFrame(loop);
-            }
-        }
-        window.onload = function () {
-            if (/(iPhone|iPod)/.test(ua)) { // iPadもVideoはインライン再生可能である
-                ctx.scale(0.5, 0.5);
-                var prms1 = new Promise(function (resolve, reject) {
-                    video.addEventListener('canplay', function () {
-                        resolve();
-                    });
-                    video.addEventListener('error', function () {
-                        reject();
-                        alert('failed loading video');
-                    });
-                });
-                var prms2 = new Promise(function (resolve, reject) {
-                    audio.addEventListener('canplay', function () {
-                        resolve();
-                    });
-                    audio.addEventListener('error', function () {
-                        reject();
-                        alert('failed loading audio');
-                    });
-                });
-                Promise.all([prms1, prms2]).then(function () {
-                    audio.play();
-                    loop();
-                });
-                video.src = 'https://videos-origin.mozilla.org/uploads/mozillaorg/meetFFXmobile2-640x360.mp4';
-                video.load();
-                audio.src = 'https://videos-origin.mozilla.org/uploads/mozillaorg/meetFFXmobile2-640x360.mp4'; // 動画ファイルを突っ込んでも再生される
-                audio.load();
-            } else { // AndroidとかiPadなら素直にVideoタグで再生
-                canvas.parentNode.insertBefore(video, canvas);
-                video.style.display = 'block';
+        var timer = document.getElementById("timer");
+        if (/(iPhone|iPod)/.test(ua) || true) { // iPadもVideoはインライン再生可能である
+            ctx.scale(0.5, 0.5);
+            var prms1 = new Promise(function (resolve, reject) {
                 video.addEventListener('canplay', function () {
-                    video.play();
+                    resolve();
                 });
-                video.src = 'https://videos-origin.mozilla.org/uploads/mozillaorg/meetFFXmobile2-640x360.mp4';
-                video.load();
-                canvas.parentNode.removeChild(canvas);
-            }
-        };
+                video.addEventListener('error', function () {
+                    reject();
+                    alert('failed loading video');
+                });
+            });
+            var prms2 = new Promise(function (resolve, reject) {
+                audio.addEventListener('canplay', function () {
+                    resolve();
+                });
+                audio.addEventListener('error', function () {
+                    reject();
+                    alert('failed loading audio');
+                });
+            });
+            Promise.all([prms1, prms2]).then(function () {
+                audio.play();
+                (function loop() {
+                    video.currentTime = audio.currentTime;
+                    timer.innerText = audio.currentTime.toString();
+                    ctx.drawImage(video, 0, 0, 640, 360);
+                    if (true) {
+                        requestAnimationFrame(loop);
+                    }
+                })();
+            });
+            video.src = 'https://videos-origin.mozilla.org/uploads/mozillaorg/meetFFXmobile2-640x360.mp4';
+            video.load();
+            audio.src = 'https://videos-origin.mozilla.org/uploads/mozillaorg/meetFFXmobile2-640x360.mp4'; // 動画ファイルを突っ込んでも再生される
+            audio.load();
+        } else { // AndroidとかiPadなら素直にVideoタグで再生
+            canvas.parentNode.insertBefore(video, canvas);
+            video.style.display = 'block';
+            video.addEventListener('canplay', function () {
+                video.play();
+            });
+            video.src = 'https://videos-origin.mozilla.org/uploads/mozillaorg/meetFFXmobile2-640x360.mp4';
+            video.load();
+            canvas.parentNode.removeChild(canvas);
+        }
     </script>
 </body>
 </html>
