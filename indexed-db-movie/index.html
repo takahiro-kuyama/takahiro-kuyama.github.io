@@ -87,6 +87,7 @@
                                 var xhr = new XMLHttpRequest();
                                 xhr.open('GET', movie_url, true);
                                 xhr.responseType = 'arraybuffer';
+                                //IndexedDBを使用した場合との時間差を明確にするため、XMLHttpRequestのキャッシュを無効化（本来は必要なし）
                                 xhr.setRequestHeader('Pragma', 'no-cache');
                                 xhr.setRequestHeader('Cache-Control', 'no-cache');
                                 xhr.setRequestHeader('If-Modified-Since', 'Thu, 01 Jun 1970 00:00:00 GMT');
