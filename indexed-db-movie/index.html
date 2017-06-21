@@ -87,6 +87,9 @@
                                 var xhr = new XMLHttpRequest();
                                 xhr.open('GET', movie_url, true);
                                 xhr.responseType = 'arraybuffer';
+                                xhr.setRequestHeader('Pragma', 'no-cache');
+                                xhr.setRequestHeader('Cache-Control', 'no-cache');
+                                xhr.setRequestHeader('If-Modified-Since', 'Thu, 01 Jun 1970 00:00:00 GMT');
 
                                 xhr.onload = function (e) {
                                     db_status.innerText = "movie is loaded"
