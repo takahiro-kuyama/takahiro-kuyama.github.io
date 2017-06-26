@@ -65,9 +65,14 @@
             var togglePlay = function () {
                 if (video.paused) {
                     if (!is_video_loaded) {
-                        //1.indexedDBを開く
-                        var idbReq = indexedDB.open("test", version);
-                        db_status.innerText = "opening indexedDB";
+                        try{
+                            //1.indexedDBを開く
+                            var idbReq = indexedDB.open("test", version);
+                            db_status.innerText = "opening indexedDB";
+                        } catch (e) {
+                            error_status.innerText = "IndexedDB is not implemented";
+                            return;
+                        }
 
                         //2.DBの新規作成時、またはバージョン変更時に実行するコード
                         idbReq.onupgradeneeded = function (event) {
